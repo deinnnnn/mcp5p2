@@ -7,7 +7,7 @@
 
     <h1>Search for a Value</h1>
 
-    <label>Enter a number separated by commas:</label>
+    <label>Enter numbers separated by commas:</label>
     <br>
     <input type="text" id="arrayInput">
 
@@ -22,21 +22,36 @@
     <button onclick="searchArray()">Search</button>
 
     <h2>Result:</h2>
-
     <p id="result"></p>
 
     <script>
         function searchArray() {
 
             let input = document.getElementById("arrayInput").value;
-            let searchValue = document.getElementById("searchValue").value;
+            let searchValue = document.getElementById("searchValue").value.trim();
 
-            let array = input.split(",");
+            let array = [];
+            let value = "";
+
+            // Gumawa ng array nang hindi gumagamit ng split()
+            for (let i = 0; i <= input.length; i++) {
+
+                if (input[i] == "," || i == input.length) {
+
+                    array.push(value.trim());
+                    value = "";
+
+                } else {
+                    value += input[i];
+                }
+            }
+
             let found = false;
 
+            // Hanapin ang value
             for (let i = 0; i < array.length; i++) {
 
-                if (array[i].trim() == searchValue.trim()) {
+                if (array[i] == searchValue) {
 
                     document.getElementById("result").innerHTML =
                         'Value "' + searchValue + '" found at index ' + i + '.';
@@ -47,6 +62,7 @@
             }
 
             if (found == false) {
+
                 document.getElementById("result").innerHTML =
                     'Value "' + searchValue + '" does not exist in the array.';
             }
